@@ -30,7 +30,7 @@ const Result = () => {
       <p className={!loading ? 'hidden' : ''}>Loading....</p>
     </div>
 
-{!isImageLoaded && 
+{isImageLoaded && 
     <div className='flex w-full max-w-xl bg-neutral-500 text-white
     text-sm p-0.5 mt-10 rounded-full'>
       <input onChange={e=>setInput(e.target.value)} value={input}
@@ -40,7 +40,7 @@ const Result = () => {
     </div>
 } 
 
-{isImageLoaded &&
+{!isImageLoaded &&
 
     <div className='flex gap-2 flex-wrap justify-center text-white text-sm p-0.5 mt-10 rounded-full '>
       <p onClick={()=>setIsImageLoaded(false)} 
