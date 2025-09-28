@@ -92,14 +92,14 @@ export const userCredits = async (req, res) => {
   try {
     const user = await User.findById(userId);
     res.status(200).json({
-      success: true,
+      status: true,
       credits: user.creditBalance,
       message: "Credits fetched successfully",
       user: { name: user.name },
     });
   } catch (error) {
     res.status(500).json({
-      success: false,
+      status: false,
       message: "Something went wrong",
     });
   }
@@ -140,7 +140,7 @@ export const paymentRazor = async (req, res) => {
 
       default:
         return res.status(400).json({
-          success: false,
+          status: false,
           message: "Invalid plan",
         });
     }
@@ -166,12 +166,12 @@ export const paymentRazor = async (req, res) => {
       if (error) {
         console.log(error);
         return res.status(500).json({
-          success: false,
+          status: false,
           message: "Something went wrong",
         });
       }
       res.status(200).json({
-        success: true,
+        status: true,
         order,
         message: "Order created successfully",
       });
@@ -179,7 +179,7 @@ export const paymentRazor = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.json({
-      success: false,
+      status: false,
       message: "Something went wrong",
     });
   }
@@ -195,7 +195,7 @@ export const verifyRazorpay = async (req, res) => {
         const transactionData = await Transaction.findById(orderinfo.receipt);
         if(transactionData.payment){
           return res.status(400).json({
-            success: false,
+            status: false,
             message: "Payment already done",
           });
       }
@@ -204,7 +204,7 @@ export const verifyRazorpay = async (req, res) => {
       await User.findByIdAndUpdate(userData._id , {creditBalance});
       await Transaction.findByIdAndUpdate(transactionData._id , {payment : true});
       return res.status(200).json({
-        success: true,
+        status: true,
         message: "Payment done successfully",
       });
 
@@ -213,7 +213,7 @@ export const verifyRazorpay = async (req, res) => {
     }
     else{
       res.status(400).json({
-        success: false,
+        status: false,
         message: "Payment failed",
       });
     }
@@ -221,7 +221,7 @@ export const verifyRazorpay = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.json({
-      success: false,
+      status: false,
       message: "Something went wrong",
     });
   }
