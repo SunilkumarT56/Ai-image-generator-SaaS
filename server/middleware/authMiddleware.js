@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 
 export const protect = async (req, res, next) => {
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZDk3OGUyZWM0OGNlNDc2MzVlYjE3NyIsImlhdCI6MTc1OTA4MzYxNiwiZXhwIjoxNzU5MTcwMDE2fQ.sA_stnj5fRvZ8PMc8u8ZsxQwvyrL20Cn4XdgP0k3eGI' ;
+  const {token} = req.headers;
   if (!token) {
     return res.status(401).json({
       success: false,

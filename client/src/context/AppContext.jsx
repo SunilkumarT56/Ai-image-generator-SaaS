@@ -14,9 +14,9 @@ const AppContextProvider = (props) => {
     const [credit,setCredit]=useState(false)
     const backendurl = import.meta.env.VITE_BACKEND_URL
 
-    const loadCreditsData = async()=>{
+    const loadCreditsData = async(token)=>{
         try {
-            const {data}= await axios.post('http://localhost:5001'+'/api/user/credits', {headers: {token : localStorage.getItem('token')}})
+            const {data}= await axios.post('http://localhost:5001'+'/api/user/credits',{}, {headers: {token}})
             if(data.status){
                 setCredit(data.credits)
                 setUser(data.user)
@@ -35,7 +35,7 @@ const AppContextProvider = (props) => {
 
     useEffect(()=>{
         if(token){
-            loadCreditsData()
+            loadCreditsData(token)
         }
     },[token])
 
