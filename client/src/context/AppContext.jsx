@@ -16,13 +16,13 @@ const AppContextProvider = (props) => {
 
     const loadCreditsData = async()=>{
         try {
-            const {data}= await axios.get(backendurl+'/api/user/credits', {headers: {token}})
+            const {data}= await axios.post('http://localhost:5001'+'/api/user/credits', {headers: {token : localStorage.getItem('token')}})
             if(data.status){
                 setCredit(data.credits)
                 setUser(data.user)
             }
         } catch (error) {
-            console.log(error)
+            console.log(error) 
             toast.error(error.message)
         }
     }

@@ -34,6 +34,10 @@ export const registerUser = async (req, res) => {
       status: true,
       message: `${newUser.name} registered successfully`,
       token,
+      user: {
+        name: newUser.name,
+      },
+      credits: newUser.creditBalance,
     });
   } catch (error) {
     console.log(error);
@@ -77,11 +81,10 @@ export const loginUser = async (req, res) => {
         status: true,
         message: "Logged in successfully",
         token,
-        user:{
+        user: {
           name: loggedUser.name,
-          email: loggedUser.email,
-          creditBalance: loggedUser.creditBalance
-        }
+        },
+        credits: loggedUser.creditBalance,
       });
     }
   } catch (error) {
@@ -101,6 +104,7 @@ export const userCredits = async (req, res) => {
       credits: user.creditBalance,
       message: "Credits fetched successfully",
       user: { name: user.name },
+      credits: user.creditBalance,
     });
   } catch (error) {
     res.status(500).json({
@@ -142,6 +146,7 @@ export const paymentRazor = async (req, res) => {
         credits = 5000;
         plan = "Enterprise";
         amount = 250;
+        break;
 
       default:
         return res.status(400).json({
@@ -192,37 +197,33 @@ export const paymentRazor = async (req, res) => {
 
 export const verifyRazorpay = async (req, res) => {
   try {
-    const {razorpay_order_id} =
-      req.body;
+    const { razorpay_order_id } = req.body;
 
-      const orderinfo = await razorpayInstance.orders.fetch(razorpay_order_id);
-      if(orderinfo.status === 'paid'){
-        const transactionData = await Transaction.findById(orderinfo.receipt);
-        if(transactionData.payment){
-          return res.status(400).json({
-            status: false,
-            message: "Payment already done",
-          });
+    const orderinfo = await razorpayInstance.orders.fetch(razorpay_order_id);
+    if (orderinfo.status === "paid") {
+      const transactionData = await Transaction.findById(orderinfo.receipt);
+      if (transactionData.payment) {
+        return res.status(400).json({
+          status: false,
+          message: "Payment already done",
+        });
       }
       const userData = await User.findById(transactionData.userId);
       const creditBalance = userData.creditBalance + transactionData.credits;
-      await User.findByIdAndUpdate(userData._id , {creditBalance});
-      await Transaction.findByIdAndUpdate(transactionData._id , {payment : true});
+      await User.findByIdAndUpdate(userData._id, { creditBalance });
+      await Transaction.findByIdAndUpdate(transactionData._id, {
+        payment: true,
+      });
       return res.status(200).json({
         status: true,
         message: "Payment done successfully",
       });
-
-      
-      
-    }
-    else{
+    } else {
       res.status(400).json({
         status: false,
         message: "Payment failed",
       });
     }
-
   } catch (error) {
     console.log(error);
     res.json({
