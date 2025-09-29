@@ -14,7 +14,7 @@ const BuyCredit = () => {
 
   const initPay = async(order) =>{
     const options ={
-      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      key: "rzp_test_RLqNjJIRuUCbNy",
       amount: order.amount,
       currency: order.currency,
       name: "Credits Payment",
@@ -23,7 +23,7 @@ const BuyCredit = () => {
       receipt: order.receipt,
       handler: async(response)=>{
         try {
-          const {data}= await axios.post('http://localhost:5001'+'/api/user/payment/verify-razor',
+          const {data}= await axios.post('http://localhost:5001'+'/api/user/verify-razor',
           response,{headers:{token}})
           if(data.success){
             toast.success('Credit Added')
@@ -40,22 +40,28 @@ const BuyCredit = () => {
   }
 
 
-  const paymentRazorpay = async (planId)=>{
+  const paymentRazorpay = async (planId) => {
     try {
-      if(!user){
-        setShowLogin(true)
+      if (!user) {
+        setShowLogin(true);
+        return; // Prevent API call when not logged in
       }
-
-      const {data} =await axios.post('http://localhost:5001'+'/api/user/payment/pay-razor',{planId},{headers:{token}})
-
-      if(data.success){
-        initPay(data.order)
+  
+      const { data } = await axios.post(
+        'http://localhost:5001/api/user/pay-razor',
+        { planId },
+        { headers: { token } } // safer
+      );
+  
+      if (data.status) {
+        initPay(data.order);
+      } else {
+        toast.error("Payment initialization failed");
       }
-
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message || "Something went wrong");
     }
-  }
+  };
 
   return (
     <motion.div 
