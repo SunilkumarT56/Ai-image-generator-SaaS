@@ -23,7 +23,7 @@ const BuyCredit = () => {
       receipt: order.receipt,
       handler: async(response)=>{
         try {
-          const {data}= await axios.post('http://localhost:5001'+'/api/user/verify-razor',
+          const {data}= await axios.post('https://ai-image-generator-saas-1.onrender.com'+'/api/user/verify-razor',
           response,{headers:{token}})
           if(data.success){
             toast.success('Credit Added')
@@ -48,7 +48,7 @@ const BuyCredit = () => {
       }
   
       const { data } = await axios.post(
-        'http://localhost:5001/api/user/pay-razor',
+        'https://ai-image-generator-saas-1.onrender.com/api/user/pay-razor',
         { planId },
         { headers: { token } } // safer
       );

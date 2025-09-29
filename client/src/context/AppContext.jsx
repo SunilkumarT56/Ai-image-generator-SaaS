@@ -31,7 +31,7 @@ const AppContextProvider = (props) => {
 
     const generateImage=async(prompt)=>{
         try {
-           const {data} = await axios.post('http://localhost:5001'+'/api/image/generate',{prompt},{headers:{token}})
+           const {data} = await axios.post('https://ai-image-generator-saas-1.onrender.com'+'/api/image/generate',{prompt},{headers:{token}})
            if(data.success){
                loadCreditsData(token)
                return data.image
