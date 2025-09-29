@@ -18,7 +18,7 @@ const AppContextProvider = (props) => {
 
     const loadCreditsData = async(token)=>{
         try {
-            const {data}= await axios.post('http://localhost:5001'+'/api/user/credits',{}, {headers: {token}})
+            const {data}= await axios.post('https://ai-image-generator-saa-s-c4in.vercel.app'+'/api/user/credits',{}, {headers: {token}})
             if(data.status){
                 setCredit(data.credits)
                 setUser(data.user)
