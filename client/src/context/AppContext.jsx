@@ -33,11 +33,11 @@ const AppContextProvider = (props) => {
         try {
            const {data} = await axios.post('http://localhost:5001'+'/api/image/generate',{prompt},{headers:{token}})
            if(data.success){
-               loadCreditsData()
+               loadCreditsData(token)
                return data.image
             }else{
                 toast.error(data.message)
-                loadCreditsData()
+                loadCreditsData(token)
                 if(data.creditBalance === 0){
                     navigate('/buy')
             }
@@ -45,6 +45,8 @@ const AppContextProvider = (props) => {
             toast.error(error.message)
         }
     }
+
+    
 
     const logout=()=>{
         localStorage.removeItem('token')

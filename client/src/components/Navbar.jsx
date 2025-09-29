@@ -27,14 +27,14 @@ const Navbar = () => {
                     <img className='w-5' src={assets.credit_star} 
                     alt="" />
                     <p className='text-xs sm:text-sm font-medium
-                    text-gray-600'>Credits left:{credit}</p>
+                    text-gray-600 cursor-pointer'>Credits left:{credit}</p>
                 </button>
                 <p className='text-gray-600 max-sm:hidden pl-4'>Hi, {user.name}</p>
                 <div className='relative group'>
                     <img src={assets.profile_icon} className='w-10 
-                    drop-shadow' alt="" />
+                    drop-shadow cursor-pointer' alt="" />
                     <div className='absolute hidden group-hover:block
-                    top-0 right-0 z-10 text-black rounded pt-12'>
+                    top-0 right-0 z-10 text-black rounded pt-12 '>
                         <ul className='list-none m-0 p-2 bg-white
                         rounded-md border text-sm'>
                             <li onClick={logout} className='py-1 px-2 cursor-pointer pr-10'>Logout</li>
