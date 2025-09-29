@@ -133,17 +133,17 @@ export const paymentRazor = async (req, res) => {
     let credits, plan, amount, date;
     switch (planId) {
       case "Basic":
-        credits = 100;
+        credits = 5;
         plan = "Basic";
         amount = 10;
         break;
       case "Advanced":
-        credits = 500;
+        credits = 50 ;
         plan = "Premium";
-        amount = 20;
+        amount = 100;
         break;
       case "Business":
-        credits = 5000;
+        credits = 125;
         plan = "Enterprise";
         amount = 250;
         break;
