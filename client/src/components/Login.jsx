@@ -20,18 +20,20 @@ const Login = () => {
         try {
             
             if(state === 'Login'){
-             const {data} = await axios.post(backendurl + '/api/user/login', {email,password})
+             const {data} = await axios.post('http://localhost:5001' + '/api/user/login', {email,password})
+             console.log(data.token);
                 if(data.status){
                     setToken(data.token)
                     setUser(data.user)
                     localStorage.setItem('token',data.token)
+                    
                     setShowLogin(false)
                 }else{
                     toast.error(data.message)
                 }
 
             }else{
-                const {data} = await axios.post(backendurl + '/api/user/register', {name,email,password})
+                const {data} = await axios.post('http://localhost:5001' + '/api/user/register', {name,email,password})
                 if(data.status){
                     setToken(data.token)
                     setUser(data.user)
