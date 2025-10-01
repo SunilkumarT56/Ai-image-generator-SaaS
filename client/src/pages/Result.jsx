@@ -4,7 +4,7 @@ import { motion } from "motion/react"
 import { AppContext } from '../context/AppContext'
 
 const Result = () => {
-  const [image, setImage] = useState(assets.sample_img_1)
+  const [image, setImage] = useState(assets.sample_img_2)
   const [loading, setLoading] = useState(false)
   const [input, setInput] = useState('')
   const [hasGenerated, setHasGenerated] = useState(false) // <-- clearer flag
